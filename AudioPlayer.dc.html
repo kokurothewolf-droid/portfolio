@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<style>
+  @media (max-width:480px){ .kkplayer{ min-width:0 !important; max-width:calc(100vw - 40px) !important; padding:8px 12px !important; gap:8px !important; } }
+</style>
+</helmet>
+<div class="kkplayer" style="display:flex;align-items:center;gap:12px;background:rgba(15,11,10,0.92);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:40px;padding:10px 16px;box-shadow:0 10px 30px -8px rgba(0,0,0,0.6);font-family:'Manrope',sans-serif;min-width:280px;max-width:calc(100vw - 24px);box-sizing:border-box;">
+  <audio ref="{{ audioRef }}" src="{{ track.src }}" onEnded="{{ onEnded }}" onTimeUpdate="{{ onTimeUpdate }}" onLoadedMetadata="{{ onLoaded }}"></audio>
+  <img src="{{ track.art }}" style="width:38px;height:38px;border-radius:6px;object-fit:cover;flex-shrink:0;"/>
+  <button onClick="{{ prev }}" style="background:none;border:none;color:oklch(70% 0.02 50);font-size:14px;cursor:pointer;padding:4px;">⏮</button>
+  <button onClick="{{ toggle }}" style="width:34px;height:34px;border-radius:50%;background:oklch(45% 0.18 24);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <sc-if value="{{ playing }}" hint-placeholder-val="{{ false }}">⏸</sc-if>
+    <sc-if value="{{ !playing }}" hint-placeholder-val="{{ true }}">▶</sc-if>
+  </button>
+  <button onClick="{{ next }}" style="background:none;border:none;color:oklch(70% 0.02 50);font-size:14px;cursor:pointer;padding:4px;">⏭</button>
+  <div style="flex:1;min-width:0;">
+    <div style="font-size:12px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ track.title }}</div>
+    <div onClick="{{ seek }}" style="height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin-top:6px;cursor:pointer;position:relative;">
+      <div style="height:4px;border-radius:2px;background:oklch(56% 0.22 25);width:{{ progressPct }}%;"></div>
+    </div>
+  </div>
+  <button onClick="{{ toggleMute }}" style="background:none;border:none;color:oklch(70% 0.02 50);font-size:13px;cursor:pointer;padding:4px;">
+    <sc-if value="{{ muted }}" hint-placeholder-val="{{ false }}">🔇</sc-if>
+    <sc-if value="{{ !muted }}" hint-placeholder-val="{{ true }}">🔊</sc-if>
+  </button>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  tracks = [
+    { title: 'Velvet Jaw (feat. Nyla)', src: 'uploads/Velvet Jaw.mp3', art: 'uploads/pasted-1788311967403-0.png' }
+  ];
+
+  state = {
+    index: parseInt(localStorage.getItem('kokuro_audio_index') || '0', 10) || 0,
+    playing: localStorage.getItem('kokuro_audio_playing') === 'true',
+    muted: localStorage.getItem('kokuro_audio_muted') === 'true',
+    currentTime: parseFloat(localStorage.getItem('kokuro_audio_time') || '0') || 0,
+    duration: 0
+  };
+
+  audioRef = (el) => {
+    this.audioEl = el;
+    if (!el) return;
+    el.muted = this.state.muted;
+    if (this.state.currentTime) { try { el.currentTime = this.state.currentTime; } catch (e) {} }
+    if (this.state.playing) { el.play().catch(() => this.setState({ playing: false })); }
+  };
+
+  componentWillUnmount() {
+    if (this.audioEl) localStorage.setItem('kokuro_audio_time', String(this.audioEl.currentTime || 0));
+  }
+
+  play() { this.audioEl && this.audioEl.play().then(() => this.setState({ playing: true })).catch(() => {}); localStorage.setItem('kokuro_audio_playing', 'true'); }
+  pause() { this.audioEl && this.audioEl.pause(); this.setState({ playing: false }); localStorage.setItem('kokuro_audio_playing', 'false'); }
+
+  renderVals() {
+    const track = this.tracks[this.state.index];
+    const progressPct = this.state.duration ? (this.state.currentTime / this.state.duration) * 100 : 0;
+    return {
+      track, playing: this.state.playing, muted: this.state.muted, progressPct,
+      toggle: () => this.state.playing ? this.pause() : this.play(),
+      prev: () => this.setState(s => { const i = (s.index + this.tracks.length - 1) % this.tracks.length; localStorage.setItem('kokuro_audio_index', i); return { index: i, currentTime: 0 }; }, () => this.state.playing && this.play()),
+      next: () => this.setState(s => { const i = (s.index + 1) % this.tracks.length; localStorage.setItem('kokuro_audio_index', i); return { index: i, currentTime: 0 }; }, () => this.state.playing && this.play()),
+      onEnded: () => { const i = (this.state.index + 1) % this.tracks.length; localStorage.setItem('kokuro_audio_index', i); this.setState({ index: i, currentTime: 0 }, () => this.play()); },
+      onTimeUpdate: (e) => { const t = e.target.currentTime; this.setState({ currentTime: t }); localStorage.setItem('kokuro_audio_time', String(t)); },
+      onLoaded: (e) => this.setState({ duration: e.target.duration || 0 }),
+      seek: (e) => {
+        if (!this.audioEl || !this.state.duration) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const pct = (e.clientX - rect.left) / rect.width;
+        this.audioEl.currentTime = pct * this.state.duration;
+      },
+      toggleMute: () => this.setState(s => { const m = !s.muted; if (this.audioEl) this.audioEl.muted = m; localStorage.setItem('kokuro_audio_muted', String(m)); return { muted: m }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

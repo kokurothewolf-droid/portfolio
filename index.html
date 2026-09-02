@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#0b0a0a;}
+  @keyframes smokeDrift{0%{transform:translate(0,0) scale(1);opacity:.35}50%{transform:translate(-10px,-30px) scale(1.08);opacity:.5}100%{transform:translate(6px,-60px) scale(1.15);opacity:0}}
+  @keyframes emberGlow{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;} }
+</style>
+</helmet>
+
+<div style="position:relative;min-height:100vh;background:#0b0a0a;color:oklch(94% 0.012 60);font-family:'Manrope',sans-serif;overflow-x:hidden;">
+
+  <div style="{{ glowStyle }}"></div>
+
+  <nav class="kknav" style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;flex-direction:row-reverse;padding:22px 40px;background:linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);">
+    <a href="index.html" style="font-family:'Anton',sans-serif;font-size:26px;letter-spacing:2px;color:#fff;text-decoration:none;">KOKURO</a>
+    <div style="display:none;gap:36px;align-items:center;" class="desknav">
+      <a href="Watch.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;" style-hover="color:oklch(62% 0.22 25)">WATCH</a>
+      <a href="Gallery.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;" style-hover="color:oklch(62% 0.22 25)">GALLERY</a>
+      <a href="Brixie.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;" style-hover="color:oklch(62% 0.22 25)">BRIXIE</a>
+      <a href="CreateWithMe.dc.html" style="color:#fff;background:oklch(40% 0.17 24);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;padding:10px 18px;border-radius:2px;" style-hover="background:oklch(56% 0.22 25)">CREATE WITH ME</a>
+      <a href="About.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;" style-hover="color:oklch(62% 0.22 25)">ABOUT</a>
+      <a href="https://kokurocustoms.com" target="_blank" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;" style-hover="color:oklch(62% 0.22 25)">CLOTHING</a>
+      <a href="NSFW.dc.html" style="color:oklch(56% 0.22 25);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;" style-hover="color:oklch(70% 0.24 25)">NSFW</a>
+    </div>
+    <button onClick="{{ toggleNav }}" style="display:block;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:6px;" class="hamburger">☰</button>
+  </nav>
+
+  <sc-if value="{{ navOpen }}">
+    <div style="position:fixed;inset:0;z-index:60;background:#0b0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;">
+      <button onClick="{{ toggleNav }}" style="position:absolute;top:22px;right:32px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;">✕</button>
+      <a href="Watch.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">WATCH</a>
+      <a href="Gallery.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">GALLERY</a>
+      <a href="Brixie.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">BRIXIE</a>
+      <a href="CreateWithMe.dc.html" style="color:oklch(62% 0.22 25);text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">CREATE WITH ME</a>
+      <a href="About.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">ABOUT</a>
+      <a href="https://kokurocustoms.com" target="_blank" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">CLOTHING</a>
+      <a href="NSFW.dc.html" style="color:oklch(56% 0.22 25);text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;letter-spacing:1px;">NSFW</a>
+    </div>
+  </sc-if>
+
+  <section class="herosec" style="position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1.1fr;align-items:center;padding:0 0 0 0;">
+
+    <div class="herotext" style="position:relative;padding:100px 56px 0;z-index:5;order:1;">
+      <div style="animation:fadeUp .9s ease both;">
+        <h1 class="heroTitle" style="font-family:'Anton',sans-serif;font-size:96px;line-height:0.92;margin:0;letter-spacing:1px;color:#fff;">KOKURO</h1>
+        <div style="font-size:16px;letter-spacing:3px;color:oklch(62% 0.22 25);margin-top:10px;font-weight:700;">KOKURO THE WOLF</div>
+        <p style="font-size:20px;color:oklch(85% 0.012 60);margin:28px 0 8px;font-weight:600;">AI Images. AI Films. Digital Worlds.</p>
+        <p style="font-size:15px;line-height:1.7;color:oklch(65% 0.02 50);max-width:420px;margin:0 0 30px;">Kokuro creates AI-generated imagery, cinematic AI video, character work, and experimental visual concepts — plus custom commissions for brands and creators who want a world of their own.</p>
+
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:36px;">
+          <span style="font-family:'Anton',sans-serif;font-size:22px;color:#fff;">50K+</span>
+          <span style="font-size:13px;color:oklch(60% 0.02 50);">followers across</span>
+          <a href="https://www.tiktok.com/@kokurothewolf" target="_blank" style="font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 10px;border:1px solid rgba(255,255,255,0.15);border-radius:2px;color:oklch(80% 0.012 60);text-decoration:none;" style-hover="color:oklch(62% 0.22 25);border-color:oklch(56% 0.22 25)">TIKTOK</a>
+          <a href="https://www.instagram.com/kokurothewolf/" target="_blank" style="font-size:12px;font-weight:700;letter-spacing:1px;padding:4px 10px;border:1px solid rgba(255,255,255,0.15);border-radius:2px;color:oklch(80% 0.012 60);text-decoration:none;" style-hover="color:oklch(62% 0.22 25);border-color:oklch(56% 0.22 25)">INSTAGRAM</a>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:420px;">
+          <a href="Watch.dc.html" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:#151110;border:1px solid rgba(255,255,255,0.08);border-radius:3px;text-decoration:none;transition:all .25s;" style-hover="border-color:oklch(56% 0.22 25);box-shadow:0 0 30px -6px oklch(56% 0.22 25 / 0.5);background:#1a1210">
+            <span><span style="display:block;font-family:'Anton',sans-serif;font-size:20px;color:#fff;letter-spacing:1px;">WATCH</span><span style="font-size:12px;color:oklch(60% 0.02 50);">AI video portfolio</span></span>
+            <span style="color:oklch(62% 0.22 25);font-size:22px;">→</span>
+          </a>
+          <a href="Gallery.dc.html" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:#151110;border:1px solid rgba(255,255,255,0.08);border-radius:3px;text-decoration:none;transition:all .25s;" style-hover="border-color:oklch(56% 0.22 25);box-shadow:0 0 30px -6px oklch(56% 0.22 25 / 0.5);background:#1a1210">
+            <span><span style="display:block;font-family:'Anton',sans-serif;font-size:20px;color:#fff;letter-spacing:1px;">GALLERY</span><span style="font-size:12px;color:oklch(60% 0.02 50);">AI image portfolio</span></span>
+            <span style="color:oklch(62% 0.22 25);font-size:22px;">→</span>
+          </a>
+          <a href="CreateWithMe.dc.html" style="display:flex;justify-content:space-between;align-items:center;padding:20px 24px;background:linear-gradient(135deg,#3a0f10,#1a0808);border:1px solid oklch(45% 0.18 24);border-radius:3px;text-decoration:none;transition:all .25s;" style-hover="box-shadow:0 0 40px -4px oklch(56% 0.22 25 / 0.7)">
+            <span><span style="display:block;font-family:'Anton',sans-serif;font-size:20px;color:#fff;letter-spacing:1px;">CREATE WITH ME</span><span style="font-size:12px;color:oklch(75% 0.05 30);">Custom AI work &amp; commissions</span></span>
+            <span style="color:#fff;font-size:22px;">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="herovideo" style="position:relative;height:100vh;background:#120d0c;overflow:hidden;border-left:1px solid rgba(255,255,255,0.06);order:2;">
+      <video ref="{{ videoRef }}" autoPlay="{{ true }}" loop="{{ true }}" muted="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right center;">
+        <source src="uploads/Kokuro_smoking_cigarillo_in_alley_202609011721.mp4" type="video/mp4"/>
+      </video>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 30% 50%, rgba(180,20,30,0.22), transparent 70%);"></div>
+      <div style="position:absolute;right:8%;bottom:24%;width:5px;height:5px;border-radius:50%;background:oklch(65% 0.24 28);box-shadow:0 0 12px 4px oklch(60% 0.24 28 / 0.7);animation:emberGlow 2.4s ease-in-out infinite;"></div>
+      <div style="position:absolute;inset:0;background:linear-gradient(to left, transparent 55%, #0b0a0a 100%);"></div>
+    </div>
+  </section>
+
+  <section style="padding:120px 56px;max-width:1100px;margin:0 auto;text-align:center;">
+    <div style="font-size:12px;letter-spacing:3px;color:oklch(62% 0.22 25);font-weight:700;margin-bottom:18px;">ARTIFICIAL INTELLIGENCE IS THE MEDIUM</div>
+    <h2 style="font-family:'Anton',sans-serif;font-size:44px;color:#fff;line-height:1.15;max-width:760px;margin:0 auto 24px;">Imagination is the limit.</h2>
+    <p style="font-size:16px;line-height:1.8;color:oklch(65% 0.02 50);max-width:640px;margin:0 auto;">Kokuro the Wolf lives at the edge of storytelling and emerging AI tools — cinematic worlds, character performance, and experimental imagery built frame by frame. Every piece starts as an idea and ends as a place you can step into.</p>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.08);padding:48px 56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:center;">
+    <div style="font-family:'Anton',sans-serif;font-size:18px;letter-spacing:1px;color:#fff;">KOKURO</div>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;">
+      <a href="Watch.dc.html" style="color:oklch(60% 0.02 50);text-decoration:none;font-size:13px;">Watch</a>
+      <a href="Gallery.dc.html" style="color:oklch(60% 0.02 50);text-decoration:none;font-size:13px;">Gallery</a>
+      <a href="CreateWithMe.dc.html" style="color:oklch(60% 0.02 50);text-decoration:none;font-size:13px;">Create With Me</a>
+      <a href="About.dc.html" style="color:oklch(60% 0.02 50);text-decoration:none;font-size:13px;">About</a>
+    </div>
+    <div style="font-size:12px;color:oklch(50% 0.02 50);">@kokurothewolf · © 2026 Kokuro</div>
+  </footer>
+
+  <dc-import name="AudioPlayer" style="position:fixed;bottom:24px;left:24px;z-index:200;" hint-size="300px,54px"></dc-import>
+
+  <style>
+    @media (min-width:900px){ .desknav{display:flex !important;} .hamburger{display:none !important;} }
+    @media (max-width:900px){
+      .herosec{grid-template-columns:1fr !important; min-height:auto !important;}
+      .herovideo{height:52vh !important; order:1 !important;}
+      .herotext{order:2 !important; padding:36px 24px 56px !important;}
+      .heroTitle{font-size:64px !important;}
+      .kknav{padding:18px 20px !important;}
+    }
+    @media (max-width:480px){
+      .heroTitle{font-size:52px !important;}
+    }
+  </style>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { navOpen: false, mx: 50, my: 50, reduced: false };
+  videoRef = (el) => {
+    if (el) { el.muted = true; el.loop = true; el.playsInline = true; el.play && el.play().catch(() => {}); }
+  };
+  componentDidMount() {
+    this.state.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!this.state.reduced) {
+      this._onMove = (e) => {
+        this.setState({ mx: (e.clientX / window.innerWidth) * 100, my: (e.clientY / window.innerHeight) * 100 });
+      };
+      window.addEventListener('mousemove', this._onMove);
+    }
+  }
+  componentWillUnmount() {
+    if (this._onMove) window.removeEventListener('mousemove', this._onMove);
+  }
+  renderVals() {
+    const glowStyle = {
+      position: 'fixed', inset: 0, zIndex: 1, pointerEvents: 'none',
+      background: `radial-gradient(500px circle at ${this.state.mx}% ${this.state.my}%, oklch(35% 0.16 25 / 0.10), transparent 60%)`,
+      transition: 'background .15s linear'
+    };
+    return {
+      navOpen: this.state.navOpen,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      glowStyle,
+      videoRef: this.videoRef
+    };
+  }
+}
+</script>
+</body>
+</html>

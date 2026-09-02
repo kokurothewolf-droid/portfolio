@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  body{margin:0;background:#0b0a0a;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#0b0a0a;color:oklch(94% 0.012 60);font-family:'Manrope',sans-serif;">
+
+  <nav class="kknav" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;background:rgba(11,10,10,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);">
+    <a href="index.html" style="font-family:'Anton',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;text-decoration:none;">KOKURO</a>
+    <div style="display:none;gap:36px;align-items:center;" class="desknav">
+      <a href="Watch.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">WATCH</a>
+      <a href="Gallery.dc.html" style="color:oklch(62% 0.22 25);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;border-bottom:2px solid oklch(62% 0.22 25);padding-bottom:4px;">GALLERY</a>
+      <a href="Brixie.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">BRIXIE</a>
+      <a href="CreateWithMe.dc.html" style="color:#fff;background:oklch(40% 0.17 24);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;padding:10px 18px;border-radius:2px;">CREATE WITH ME</a>
+      <a href="About.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">ABOUT</a>
+      <a href="https://kokurocustoms.com" target="_blank" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">CLOTHING</a>
+      <a href="NSFW.dc.html" style="color:oklch(56% 0.22 25);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">NSFW</a>
+    </div>
+    <button onClick="{{ toggleNav }}" style="display:block;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;" class="hamburger">☰</button>
+  </nav>
+
+  <sc-if value="{{ navOpen }}">
+    <div style="position:fixed;inset:0;z-index:60;background:#0b0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;">
+      <button onClick="{{ toggleNav }}" style="position:absolute;top:22px;right:32px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;">✕</button>
+      <a href="Watch.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">WATCH</a>
+      <a href="Gallery.dc.html" style="color:oklch(62% 0.22 25);text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">GALLERY</a>
+      <a href="Brixie.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">BRIXIE</a>
+      <a href="CreateWithMe.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">CREATE WITH ME</a>
+      <a href="About.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">ABOUT</a>
+      <a href="https://kokurocustoms.com" target="_blank" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">CLOTHING</a>
+      <a href="NSFW.dc.html" style="color:oklch(56% 0.22 25);text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">NSFW</a>
+    </div>
+  </sc-if>
+
+  <header class="kkheader" style="padding:80px 40px 30px;max-width:1300px;margin:0 auto;">
+    <div style="font-size:12px;letter-spacing:3px;color:oklch(62% 0.22 25);font-weight:700;margin-bottom:14px;">AI IMAGE PORTFOLIO</div>
+    <h1 class="kktitle" style="font-family:'Anton',sans-serif;font-size:64px;color:#fff;margin:0;letter-spacing:1px;">GALLERY</h1>
+    <p style="font-size:15px;color:oklch(60% 0.02 50);max-width:520px;margin:16px 0 0;">Character studies, worldbuilding stills, and experimental frames — each one a door into Kokuro's world.</p>
+  </header>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;padding:0 40px 36px;max-width:1300px;margin:0 auto;">
+    <sc-for list="{{ collections }}" as="c" hint-placeholder-count="5">
+      <button onClick="{{ c.select }}" style="{{ c.style }}">{{ c.label }}</button>
+    </sc-for>
+  </div>
+
+  <section class="kkgrid" style="padding:0 40px 100px;max-width:1300px;margin:0 auto;columns:3 280px;column-gap:20px;">
+    <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="9">
+      <div onClick="{{ t.open }}" style="break-inside:avoid;margin-bottom:20px;position:relative;cursor:pointer;border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);animation:fadeUp .6s ease both;">
+        <div style="width:100%;aspect-ratio:{{ t.ratio }};position:relative;">
+          <image-slot ref="{{ t.ref }}" id="{{ t.id }}" shape="rect" fit="contain" placeholder="{{ t.placeholder }}"></image-slot>
+        </div>
+        <div style="position:absolute;pointer-events:none;bottom:0;left:0;right:0;padding:14px;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);">
+          <div style="font-family:'Anton',sans-serif;font-size:17px;color:#fff;">{{ t.title }}</div>
+          <div style="font-size:11px;color:oklch(65% 0.02 50);">{{ t.collection }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <sc-if value="{{ activeTile }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ close }}" style="position:fixed;inset:0;z-index:100;background:rgba(4,3,3,0.94);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:40px;">
+      <button onClick="{{ close }}" style="position:absolute;top:24px;right:32px;background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:20px;width:40px;height:40px;border-radius:50%;cursor:pointer;z-index:5;">✕</button>
+      <button onClick="{{ prev }}" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;">‹</button>
+      <button onClick="{{ next }}" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;">›</button>
+      <div onClick="{{ stop }}" style="max-width:900px;width:90vw;">
+        <div style="width:100%;aspect-ratio:{{ activeTile.ratio }};max-height:78vh;">
+          <image-slot ref="{{ activeTile.ref }}" id="{{ activeTile.id }}" shape="rect" fit="contain" placeholder="{{ activeTile.placeholder }}"></image-slot>
+        </div>
+        <div style="padding:18px 4px;">
+          <div style="font-family:'Anton',sans-serif;font-size:24px;color:#fff;">{{ activeTile.title }}</div>
+          <div style="font-size:12px;color:oklch(65% 0.02 50);margin-top:4px;">{{ activeTile.series }}</div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <dc-import name="AudioPlayer" style="position:fixed;bottom:24px;left:24px;z-index:200;" hint-size="300px,54px"></dc-import>
+
+  <style>@media (min-width:900px){ .desknav{display:flex !important;} .hamburger{display:none !important;} }
+  @media (max-width:900px){ .kknav{padding:18px 20px !important;} .kkheader{padding:56px 24px 24px !important;} .kktitle{font-size:44px !important;} .kkgrid{padding:0 20px 70px !important; columns:2 200px !important;} }
+  @media (max-width:520px){ .kkgrid{columns:1 !important;} }
+  </style>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { navOpen: false, activeIndex: null, collection: 'All', ratios: {} };
+
+  watchRatio(id) {
+    return (el) => {
+      if (!el || !el.shadowRoot) return;
+      const img = el.shadowRoot.querySelector('.frame img');
+      if (!img || img._ratioBound) return;
+      img._ratioBound = true;
+      const update = () => {
+        if (img.naturalWidth && img.naturalHeight) {
+          const r = img.naturalWidth + '/' + img.naturalHeight;
+          if (this.state.ratios[id] !== r) this.setState(s => ({ ratios: { ...s.ratios, [id]: r } }));
+        }
+      };
+      img.addEventListener('load', update);
+      if (img.complete) update();
+    };
+  }
+
+  data = [
+    { id: 'g1', title: 'Redline', collection: 'Kokuro', ratio: '4/5', placeholder: 'Drop character portrait' },
+    { id: 'g2', title: 'Districts I', collection: 'Other Characters', ratio: '3/2', placeholder: 'Drop environment still' },
+    { id: 'g3', title: 'Ashen Hour', collection: 'Kokuro', ratio: '1/1', placeholder: 'Drop character portrait' },
+    { id: 'g4', title: 'Static Field', collection: 'Other Characters', ratio: '5/4', placeholder: 'Drop experimental frame' },
+    { id: 'g5', title: 'Moonlit Bite', collection: 'Nyla', ratio: '4/5', placeholder: 'Drop character portrait' },
+    { id: 'g6', title: 'Low Light', collection: 'Tavien', ratio: '3/4', placeholder: 'Drop character portrait' },
+    { id: 'g7', title: 'Ember Study', collection: 'Kokuro', ratio: '1/1', placeholder: 'Drop experimental frame' },
+    { id: 'g8', title: 'Velvet Hour', collection: 'Nyla', ratio: '3/4', placeholder: 'Drop character portrait' },
+    { id: 'g9', title: 'Afterimage', collection: 'Tavien', ratio: '4/5', placeholder: 'Drop character portrait' }
+  ];
+
+  collectionList = ['All', 'Kokuro', 'Nyla', 'Tavien', 'Other Characters'];
+
+  renderVals() {
+    const active = this.state.collection;
+    const collections = this.collectionList.map(label => ({
+      label,
+      select: () => this.setState({ collection: label }),
+      style: {
+        padding: '9px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px',
+        cursor: 'pointer', border: '1px solid ' + (active === label ? 'oklch(56% 0.22 25)' : 'rgba(255,255,255,0.12)'),
+        background: active === label ? 'oklch(40% 0.17 24)' : 'transparent',
+        color: active === label ? '#fff' : 'oklch(75% 0.02 50)'
+      }
+    }));
+
+    const filtered = this.data.filter(t => active === 'All' || t.collection === active);
+    const tiles = filtered.map(t => ({
+      ...t, ratio: this.state.ratios[t.id] || t.ratio, ref: this.watchRatio(t.id),
+      open: () => this.setState({ activeIndex: this.data.indexOf(t) })
+    }));
+    const idx = this.state.activeIndex;
+    const activeTile = idx !== null
+      ? { ...this.data[idx], ratio: this.state.ratios[this.data[idx].id] || this.data[idx].ratio, ref: this.watchRatio(this.data[idx].id) }
+      : null;
+    return {
+      navOpen: this.state.navOpen,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      collections, tiles, activeTile,
+      close: () => this.setState({ activeIndex: null }),
+      prev: () => this.setState(s => ({ activeIndex: (s.activeIndex + this.data.length - 1) % this.data.length })),
+      next: () => this.setState(s => ({ activeIndex: (s.activeIndex + 1) % this.data.length })),
+      stop: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

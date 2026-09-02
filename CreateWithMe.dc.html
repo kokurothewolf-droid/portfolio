@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#0b0a0a;}
+  input,textarea,select{font-family:'Manrope',sans-serif;}
+  ::placeholder{color:oklch(45% 0.02 50);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#0b0a0a;color:oklch(94% 0.012 60);font-family:'Manrope',sans-serif;">
+
+  <nav class="kknav" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;background:rgba(11,10,10,0.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,0.06);">
+    <a href="index.html" style="font-family:'Anton',sans-serif;font-size:24px;letter-spacing:2px;color:#fff;text-decoration:none;">KOKURO</a>
+    <div style="display:none;gap:36px;align-items:center;" class="desknav">
+      <a href="Watch.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">WATCH</a>
+      <a href="Gallery.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">GALLERY</a>
+      <a href="Brixie.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">BRIXIE</a>
+      <a href="CreateWithMe.dc.html" style="color:#fff;background:oklch(56% 0.22 25);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;padding:10px 18px;border-radius:2px;">CREATE WITH ME</a>
+      <a href="About.dc.html" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">ABOUT</a>
+      <a href="https://kokurocustoms.com" target="_blank" style="color:oklch(88% 0.01 60);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">CLOTHING</a>
+      <a href="NSFW.dc.html" style="color:oklch(56% 0.22 25);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1.5px;">NSFW</a>
+    </div>
+    <button onClick="{{ toggleNav }}" style="display:block;background:none;border:none;color:#fff;font-size:22px;cursor:pointer;" class="hamburger">☰</button>
+  </nav>
+
+  <sc-if value="{{ navOpen }}">
+    <div style="position:fixed;inset:0;z-index:60;background:#0b0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;">
+      <button onClick="{{ toggleNav }}" style="position:absolute;top:22px;right:32px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;">✕</button>
+      <a href="Watch.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">WATCH</a>
+      <a href="Gallery.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">GALLERY</a>
+      <a href="Brixie.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">BRIXIE</a>
+      <a href="CreateWithMe.dc.html" style="color:oklch(62% 0.22 25);text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">CREATE WITH ME</a>
+      <a href="About.dc.html" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">ABOUT</a>
+      <a href="https://kokurocustoms.com" target="_blank" style="color:#fff;text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">CLOTHING</a>
+      <a href="NSFW.dc.html" style="color:oklch(56% 0.22 25);text-decoration:none;font-family:'Anton',sans-serif;font-size:34px;">NSFW</a>
+    </div>
+  </sc-if>
+
+  <header class="kkheader" style="position:relative;padding:100px 40px 60px;max-width:1100px;margin:0 auto;text-align:center;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%, rgba(160,20,25,0.18), transparent 65%);pointer-events:none;"></div>
+    <div style="position:relative;">
+      <div style="font-size:12px;letter-spacing:3px;color:oklch(62% 0.22 25);font-weight:700;margin-bottom:16px;">CUSTOM AI WORK &amp; COMMISSIONS</div>
+      <h1 class="kktitle" style="font-family:'Anton',sans-serif;font-size:72px;color:#fff;margin:0;letter-spacing:1px;">CREATE WITH ME</h1>
+      <p style="font-size:16px;line-height:1.8;color:oklch(65% 0.02 50);max-width:600px;margin:24px auto 0;">Bring your idea into Kokuro's world — a character, a film, a campaign. Every project is built frame by frame, tuned to your story and your audience.</p>
+    </div>
+  </header>
+
+  <section style="padding:20px 40px 80px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
+    <sc-for list="{{ services }}" as="s" hint-placeholder-count="6">
+      <div style="padding:26px;background:#151110;border:1px solid rgba(255,255,255,0.08);border-radius:4px;transition:all .25s;" style-hover="border-color:oklch(50% 0.2 24);box-shadow:0 0 30px -10px oklch(56% 0.22 25 / 0.5)">
+        <div style="width:34px;height:34px;border-radius:50%;background:oklch(30% 0.14 22);margin-bottom:16px;"></div>
+        <div style="font-family:'Anton',sans-serif;font-size:19px;color:#fff;margin-bottom:8px;">{{ s.title }}</div>
+        <div style="font-size:13px;line-height:1.6;color:oklch(62% 0.02 50);">{{ s.desc }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="padding:0 40px 90px;max-width:900px;margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;text-align:center;">
+    <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+      <div style="flex:1;min-width:160px;">
+        <div style="font-family:'Anton',sans-serif;font-size:34px;color:oklch(56% 0.22 25);">{{ st.n }}</div>
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.5px;color:#fff;margin-top:6px;">{{ st.title }}</div>
+        <div style="font-size:12px;color:oklch(58% 0.02 50);margin-top:6px;line-height:1.5;">{{ st.desc }}</div>
+      </div>
+    </sc-for>
+  </section>
+
+  <section style="padding:0 40px 120px;max-width:720px;margin:0 auto;">
+    <div style="background:#120e0d;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:44px;" class="kkformcard">
+      <div style="font-family:'Anton',sans-serif;font-size:30px;color:#fff;margin-bottom:6px;">START A PROJECT</div>
+      <p style="font-size:13px;color:oklch(60% 0.02 50);margin:0 0 28px;">Tell me what you're imagining — I'll follow up within a few days.</p>
+
+      <sc-if value="{{ !submitted }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="kkformrow" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <input placeholder="Name" value="{{ form.name }}" onChange="{{ setName }}" style="{{ inputStyle }}"/>
+            <input placeholder="Email" value="{{ form.email }}" onChange="{{ setEmail }}" style="{{ inputStyle }}"/>
+          </div>
+          <div class="kkformrow" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <select value="{{ form.type }}" onChange="{{ setType }}" style="{{ inputStyle }}">
+              <option value="">Project type — Image / Video / Both</option>
+              <option value="Image">Image</option>
+              <option value="Video">Video</option>
+              <option value="Both">Both</option>
+            </select>
+            <select value="{{ form.budget }}" onChange="{{ setBudget }}" style="{{ inputStyle }}">
+              <option value="">Budget range</option>
+              <option value="Under $500">Under $500</option>
+              <option value="$500–1,500">$500–1,500</option>
+              <option value="$1,500–5,000">$1,500–5,000</option>
+              <option value="$5,000+">$5,000+</option>
+              <option value="Not sure yet">Not sure yet</option>
+            </select>
+          </div>
+          <textarea placeholder="Describe the project — the story, the character, the vibe" value="{{ form.desc }}" onChange="{{ setDesc }}" rows="4" style="{{ inputStyle }}"></textarea>
+          <div class="kkformrow" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <input placeholder="Reference links / inspiration" value="{{ form.refs }}" onChange="{{ setRefs }}" style="{{ inputStyle }}"/>
+            <input placeholder="Desired timeframe" value="{{ form.timeframe }}" onChange="{{ setTimeframe }}" style="{{ inputStyle }}"/>
+          </div>
+          <button onClick="{{ submit }}" style="margin-top:8px;padding:16px;background:oklch(45% 0.18 24);border:none;border-radius:3px;color:#fff;font-weight:700;letter-spacing:1px;font-size:14px;cursor:pointer;transition:background .2s;" style-hover="background:oklch(56% 0.22 25)">SEND INQUIRY</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:30px 0;">
+          <div style="font-family:'Anton',sans-serif;font-size:24px;color:#fff;margin-bottom:10px;">Message ready.</div>
+          <p style="font-size:13px;color:oklch(62% 0.02 50);">Your email client should be opening now with your project details filled in.</p>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <dc-import name="AudioPlayer" style="position:fixed;bottom:24px;left:24px;z-index:200;" hint-size="300px,54px"></dc-import>
+
+  <style>@media (min-width:900px){ .desknav{display:flex !important;} .hamburger{display:none !important;} }
+  @media (max-width:900px){ .kknav{padding:18px 20px !important;} .kkheader{padding:70px 24px 40px !important;} .kktitle{font-size:48px !important;} .kkformcard{padding:26px !important;} }
+  @media (max-width:560px){ .kkformrow{grid-template-columns:1fr !important;} }
+  </style>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    navOpen: false, submitted: false,
+    form: { name: '', email: '', type: '', budget: '', desc: '', refs: '', timeframe: '' }
+  };
+
+  services = [
+    { title: 'Character & Fursona Art', desc: 'AI character imagery and fursona visualization, built to feel unmistakably yours.' },
+    { title: 'Cinematic AI Video', desc: 'Story-driven short films and atmospheric scenes in Kokuro\'s visual language.' },
+    { title: 'Short-Form Social Content', desc: 'Vertical, feed-native clips built for TikTok and Reels.' },
+    { title: 'Character Animation', desc: 'Performance and motion for an existing character or a new one.' },
+    { title: 'Brand & Promotional Visuals', desc: 'Campaign imagery and video for brands and creator collabs.' },
+    { title: 'Experimental / Concept Work', desc: 'Open-ended visual R&D — new looks, new ideas, no template.' }
+  ];
+
+  steps = [
+    { n: '01', title: 'INQUIRE', desc: 'Send your project details.' },
+    { n: '02', title: 'CONCEPT', desc: 'We shape the direction together.' },
+    { n: '03', title: 'CREATION', desc: 'The work comes to life.' },
+    { n: '04', title: 'DELIVERY', desc: 'Final files, ready to use.' }
+  ];
+
+  inputStyle = {
+    background: '#0e0b0a', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '3px',
+    padding: '13px 14px', color: '#fff', fontSize: '13px', width: '100%', boxSizing: 'border-box', outline: 'none'
+  };
+
+  set(key) { return (e) => this.setState(s => ({ form: { ...s.form, [key]: e.target.value } })); }
+
+  renderVals() {
+    const f = this.state.form;
+    return {
+      navOpen: this.state.navOpen,
+      toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
+      services: this.services, steps: this.steps,
+      form: f, inputStyle: this.inputStyle,
+      setName: this.set('name'), setEmail: this.set('email'), setType: this.set('type'),
+      setBudget: this.set('budget'), setDesc: this.set('desc'), setRefs: this.set('refs'), setTimeframe: this.set('timeframe'),
+      submitted: this.state.submitted,
+      submit: () => {
+        const body = `Name: ${f.name}\nEmail: ${f.email}\nType: ${f.type}\nBudget: ${f.budget}\nTimeframe: ${f.timeframe}\nRefs: ${f.refs}\n\n${f.desc}`;
+        window.location.href = `mailto:hello@kokurothewolf.com?subject=${encodeURIComponent('Project Inquiry — ' + f.name)}&body=${encodeURIComponent(body)}`;
+        this.setState({ submitted: true });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>

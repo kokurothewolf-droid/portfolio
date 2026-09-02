@@ -38,12 +38,12 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   tracks = [
-    { title: 'Velvet Jaw (feat. Nyla)', src: 'uploads/Velvet Jaw.mp3', art: 'uploads/pasted-1788311967403-0.png' }
+    { title: 'Velvet Jaw (feat. Nyla)', src: 'uploads/Velvet%20Jaw.mp3', art: 'uploads/pasted-1788311967403-0.png' }
   ];
 
   state = {
     index: parseInt(localStorage.getItem('kokuro_audio_index') || '0', 10) || 0,
-    playing: localStorage.getItem('kokuro_audio_playing') === 'true',
+    playing: localStorage.getItem('kokuro_audio_playing') !== 'false',
     muted: localStorage.getItem('kokuro_audio_muted') === 'true',
     currentTime: parseFloat(localStorage.getItem('kokuro_audio_time') || '0') || 0,
     duration: 0
@@ -56,6 +56,15 @@ class Component extends DCLogic {
     if (this.state.currentTime) { try { el.currentTime = this.state.currentTime; } catch (e) {} }
     if (this.state.playing) { el.play().catch(() => this.setState({ playing: false })); }
   };
+
+  componentDidMount() {
+    if (this.audioEl && this.state.playing) {
+      this.audioEl.play().catch(() => {
+        this.audioEl.muted = true;
+        this.audioEl.play().then(() => this.setState({ muted: true })).catch(() => this.setState({ playing: false }));
+      });
+    }
+  }
 
   componentWillUnmount() {
     if (this.audioEl) localStorage.setItem('kokuro_audio_time', String(this.audioEl.currentTime || 0));

@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BRIXIE — Kokuro the Wolf</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -11,7 +13,6 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 <style>
   body{margin:0;background:#120a10;}
@@ -76,7 +77,7 @@
         </sc-if>
         <sc-if value="{{ !t.isVideo }}" hint-placeholder-val="{{ true }}">
           <div style="width:100%;aspect-ratio:{{ t.ratio }};position:relative;">
-            <image-slot ref="{{ t.ref }}" id="{{ t.id }}" shape="rect" fit="contain" placeholder="{{ t.placeholder }}"></image-slot>
+            <img src="{{ t.src }}" loading="lazy" alt="{{ t.title }}" style="width:100%;height:100%;object-fit:contain;display:block;"/>
           </div>
         </sc-if>
         <div style="position:absolute;pointer-events:none;bottom:0;left:0;right:0;padding:14px;background:linear-gradient(to top, rgba(30,8,20,0.85), transparent);">
@@ -105,7 +106,7 @@
         </sc-if>
         <sc-if value="{{ !activeTile.isVideo }}" hint-placeholder-val="{{ true }}">
           <div style="width:100%;aspect-ratio:{{ activeTile.ratio }};max-height:78vh;">
-            <image-slot ref="{{ activeTile.ref }}" id="{{ activeTile.id }}" shape="rect" fit="contain" placeholder="{{ activeTile.placeholder }}"></image-slot>
+            <img src="{{ activeTile.src }}" alt="{{ activeTile.title }}" style="width:100%;height:100%;object-fit:contain;display:block;"/>
           </div>
         </sc-if>
         <div style="padding:18px 4px;">
@@ -122,45 +123,14 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { navOpen: false, activeIndex: null, ratios: {} };
+  state = { navOpen: false, activeIndex: null };
 
-  watchRatio(id) {
-    return (el) => {
-      if (!el || !el.shadowRoot) return;
-      const img = el.shadowRoot.querySelector('.frame img');
-      if (!img || img._ratioBound) return;
-      img._ratioBound = true;
-      const update = () => {
-        if (img.naturalWidth && img.naturalHeight) {
-          const r = img.naturalWidth + '/' + img.naturalHeight;
-          if (this.state.ratios[id] !== r) this.setState(s => ({ ratios: { ...s.ratios, [id]: r } }));
-        }
-      };
-      img.addEventListener('load', update);
-      if (img.complete) update();
-    };
-  }
-
-  data = [
-    { id: 'b1', title: 'Brixie I', tag: 'Portrait', isVideo: false, ratio: '4/5', placeholder: 'Drop Brixie image' },
-    { id: 'b2', title: 'Brixie Reel I', tag: 'Video', isVideo: true, ratio: '16/9', src: 'uploads/Wan_Video_Omni_A fast cinematic anime fight between two fully anthropomorphi.mp4' },
-    { id: 'b3', title: 'Brixie II', tag: 'Portrait', isVideo: false, ratio: '3/4', placeholder: 'Drop Brixie image' },
-    { id: 'b4', title: 'Brixie III', tag: 'Character Study', isVideo: false, ratio: '1/1', placeholder: 'Drop Brixie image' },
-    { id: 'b5', title: 'Brixie Reel II', tag: 'Video', isVideo: true, ratio: '9/16' },
-    { id: 'b6', title: 'Brixie IV', tag: 'Portrait', isVideo: false, ratio: '4/5', placeholder: 'Drop Brixie image' }
-  ];
+  data = [{"id": "brixie_001", "title": "Brixie 001", "ratio": "1080/1324", "src": "uploads/Brixie/Brixie_001.jpg", "tag": "Portrait", "isVideo": false}, {"id": "brixie_002", "title": "Brixie 002", "ratio": "1080/1324", "src": "uploads/Brixie/Brixie_002.jpg", "tag": "Portrait", "isVideo": false}, {"id": "b-reel-1", "title": "Brixie Reel I", "tag": "Video", "isVideo": true, "ratio": "16/9", "src": "uploads/Wan_Video_Omni_A fast cinematic anime fight between two fully anthropomorphi.mp4"}, {"id": "brixie_004", "title": "Brixie 004", "ratio": "802/1053", "src": "uploads/Brixie/Brixie_004.jpg", "tag": "Portrait", "isVideo": false}, {"id": "brixie_005", "title": "Brixie 005", "ratio": "1198/1313", "src": "uploads/Brixie/Brixie_005.png", "tag": "Portrait", "isVideo": false}, {"id": "brixie_006", "title": "Brixie 006", "ratio": "928/1137", "src": "uploads/Brixie/Brixie_006.PNG", "tag": "Portrait", "isVideo": false}, {"id": "brixie_008", "title": "Brixie 008", "ratio": "1179/884", "src": "uploads/Brixie/Brixie_008.jpg", "tag": "Portrait", "isVideo": false}, {"id": "brixie_009", "title": "Brixie 009", "ratio": "840/1397", "src": "uploads/Brixie/Brixie_009.PNG", "tag": "Portrait", "isVideo": false}, {"id": "brixie_010", "title": "Brixie 010", "ratio": "1122/1402", "src": "uploads/Brixie/Brixie_010.png", "tag": "Portrait", "isVideo": false}, {"id": "brixie_011", "title": "Brixie 011", "ratio": "1080/1324", "src": "uploads/Brixie/Brixie_011.jpg", "tag": "Portrait", "isVideo": false}, {"id": "brixie_012", "title": "Brixie 012", "ratio": "922/1152", "src": "uploads/Brixie/Brixie_012.PNG", "tag": "Portrait", "isVideo": false}, {"id": "brixie_013", "title": "Brixie 013", "ratio": "358/502", "src": "uploads/Brixie/Brixie_013.PNG", "tag": "Portrait", "isVideo": false}, {"id": "brixie_014", "title": "Brixie 014", "ratio": "1122/1402", "src": "uploads/Brixie/Brixie_014.png", "tag": "Portrait", "isVideo": false}, {"id": "brixie_015", "title": "Brixie 015", "ratio": "1080/1324", "src": "uploads/Brixie/Brixie_015.jpg", "tag": "Portrait", "isVideo": false}, {"id": "brixie_016", "title": "Brixie 016", "ratio": "1122/1402", "src": "uploads/Brixie/Brixie_016.png", "tag": "Portrait", "isVideo": false}, {"id": "brixie_017", "title": "Brixie 017", "ratio": "1086/1448", "src": "uploads/Brixie/Brixie_017.png", "tag": "Portrait", "isVideo": false}, {"id": "brixie_021", "title": "Brixie 021", "ratio": "1672/941", "src": "uploads/Brixie/Brixie_021.png", "tag": "Portrait", "isVideo": false}, {"id": "brixie_022", "title": "Brixie 022", "ratio": "1122/1402", "src": "uploads/Brixie/Brixie_022.png", "tag": "Portrait", "isVideo": false}];
 
   renderVals() {
-    const tiles = this.data.map(t => ({
-      ...t,
-      ratio: t.isVideo ? t.ratio : (this.state.ratios[t.id] || t.ratio),
-      ref: t.isVideo ? undefined : this.watchRatio(t.id),
-      open: () => this.setState({ activeIndex: this.data.indexOf(t) })
-    }));
+    const tiles = this.data.map(t => ({ ...t, open: () => this.setState({ activeIndex: this.data.indexOf(t) }) }));
     const idx = this.state.activeIndex;
-    const activeTile = idx !== null
-      ? { ...this.data[idx], ratio: this.data[idx].isVideo ? this.data[idx].ratio : (this.state.ratios[this.data[idx].id] || this.data[idx].ratio), ref: this.data[idx].isVideo ? undefined : this.watchRatio(this.data[idx].id) }
-      : null;
+    const activeTile = idx !== null ? this.data[idx] : null;
     return {
       navOpen: this.state.navOpen,
       toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),

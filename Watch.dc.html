@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WATCH — Kokuro the Wolf</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -53,27 +55,12 @@
     <p style="font-size:15px;color:oklch(60% 0.02 50);max-width:520px;margin:16px 0 0;">Cinematic AI film, character performance, and short-form work — browse without leaving Kokuro's world.</p>
   </header>
 
-  <div style="display:flex;gap:10px;flex-wrap:wrap;padding:0 40px 40px;max-width:1300px;margin:0 auto;">
-    <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="7">
-      <button onClick="{{ cat.select }}" style="{{ cat.style }}">{{ cat.label }}</button>
-    </sc-for>
-  </div>
-
   <section style="padding:0 40px 30px;max-width:1300px;margin:0 auto;">
-    <div onClick="{{ featured.open }}" class="kkfeatured" style="position:relative;height:520px;border-radius:4px;overflow:hidden;cursor:pointer;background:#151110;border:1px solid rgba(255,255,255,0.08);">
-      <div style="position:absolute;inset:0;background:repeating-linear-gradient(120deg,#1c1513 0px,#1c1513 2px,#110c0b 2px,#110c0b 30px);"></div>
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 30% 50%, rgba(180,20,30,0.22), transparent 70%);"></div>
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 55%);"></div>
-      <div style="position:absolute;top:24px;left:24px;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#fff;background:oklch(40% 0.17 24);padding:6px 12px;border-radius:2px;">FEATURED</div>
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;">
-        <div style="width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff;margin-left:4px;"></div>
+    <div class="kkfeatured" style="position:relative;border-radius:4px;overflow:hidden;background:#151110;border:1px solid rgba(255,255,255,0.08);display:flex;justify-content:center;">
+      <div style="position:relative;width:min(380px,92vw);aspect-ratio:9/16;max-height:640px;">
+        <iframe src="{{ featuredEmbed }}" style="position:absolute;inset:0;width:100%;height:100%;border:0;" scrolling="no" allowtransparency="true"></iframe>
       </div>
-      <div style="position:absolute;bottom:28px;left:28px;right:28px;">
-        <div style="font-size:11px;letter-spacing:1.5px;color:oklch(70% 0.2 25);font-weight:700;margin-bottom:6px;">CINEMATIC</div>
-        <h3 style="font-family:'Anton',sans-serif;font-size:38px;color:#fff;margin:0;">Ashwood Hollow</h3>
-        <p style="font-size:13px;color:oklch(70% 0.02 50);max-width:480px;margin:8px 0 0;">A wolf walks through a burning forest at dusk — full cinematic short, 2m40s.</p>
-      </div>
-      <div style="position:absolute;bottom:24px;right:28px;font-family:monospace;font-size:10px;color:oklch(55% 0.02 50 / 0.7);">[ FEATURED VIDEO — DROP MP4 HERE ]</div>
+      <div style="position:absolute;top:24px;left:24px;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#fff;background:oklch(40% 0.17 24);padding:6px 12px;border-radius:2px;z-index:2;">FEATURED — LATEST REEL</div>
     </div>
   </section>
 
@@ -98,14 +85,15 @@
     <div onClick="{{ closeVideo }}" style="position:fixed;inset:0;z-index:100;background:rgba(4,3,3,0.92);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:40px;">
       <div onClick="{{ stop }}" class="kkmodal" style="position:relative;width:min(1100px,92vw);max-height:86vh;background:#120d0c;border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 40px 100px -20px rgba(0,0,0,0.8);">
         <button onClick="{{ closeVideo }}" style="position:absolute;top:16px;right:16px;z-index:5;background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:20px;width:36px;height:36px;border-radius:50%;cursor:pointer;">✕</button>
-        <div style="position:relative;height:60vh;background:repeating-linear-gradient(120deg,#1c1513 0px,#1c1513 2px,#110c0b 2px,#110c0b 30px);">
-          <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 50% 50%, rgba(180,20,30,0.2), transparent 70%);"></div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:oklch(55% 0.02 50 / 0.7);font-family:monospace;font-size:12px;">[ PLAYBACK — DROP MP4/WEBM HERE ]</div>
+        <div style="position:relative;aspect-ratio:9/16;max-height:70vh;margin:0 auto;width:min(394px,92vw);background:#151110;">
+          <iframe src="{{ activeVideo.embed }}" style="position:absolute;inset:0;width:100%;height:100%;border:0;" scrolling="no" allowtransparency="true"></iframe>
         </div>
-        <div style="padding:24px 28px;">
-          <div style="font-size:11px;letter-spacing:1.5px;color:oklch(70% 0.2 25);font-weight:700;">{{ activeVideo.category }}</div>
-          <h3 style="font-family:'Anton',sans-serif;font-size:28px;color:#fff;margin:8px 0 6px;">{{ activeVideo.title }}</h3>
-          <p style="font-size:14px;color:oklch(65% 0.02 50);margin:0;">{{ activeVideo.description }}</p>
+        <div style="padding:18px 28px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Anton',sans-serif;font-size:24px;color:#fff;margin:0;">{{ activeVideo.title }}</h3>
+            <div style="font-size:12px;color:oklch(65% 0.02 50);margin-top:4px;">@kokurothewolf on Instagram</div>
+          </div>
+          <a href="{{ activeVideo.permalink }}" target="_blank" style="font-size:11px;font-weight:700;letter-spacing:1px;padding:10px 14px;border:1px solid rgba(255,255,255,0.2);border-radius:2px;color:oklch(80% 0.12 60);text-decoration:none;">OPEN ON INSTAGRAM</a>
         </div>
       </div>
     </div>
@@ -122,46 +110,30 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { navOpen: false, filter: 'All', activeIndex: null };
+  state = { navOpen: false, activeIndex: null };
 
-  data = [
-    { title: 'Ember Line', category: 'CINEMATIC', duration: '1m52s', ratio: '16/9', span: 'span 2', description: 'A slow pan through a red-lit alley as Kokuro lights a cigar under neon rain.' },
-    { title: 'Off Script', category: 'COMEDY', duration: '0m48s', ratio: '9/16', span: 'span 1', description: 'A short-form bit where Kokuro breaks the fourth wall mid-monologue.' },
-    { title: 'Static Bloom', category: 'EXPERIMENTAL', duration: '1m10s', ratio: '9/16', span: 'span 1', description: 'Generative particle study — a wolf silhouette dissolving into light.' },
-    { title: 'Nightline Ad', category: 'COMMERCIAL', duration: '0m30s', ratio: '16/9', span: 'span 2', description: 'A concept spot for a fictional streetwear drop, shot in Kokuro\'s house style.' },
-    { title: 'Quick Cut #12', category: 'SHORT FORM', duration: '0m22s', ratio: '9/16', span: 'span 1', description: 'Vertical short — a beat made for the feed, not the frame.' },
-    { title: 'Hollow Districts', category: 'WORLDBUILDING', duration: '2m05s', ratio: '9/16', span: 'span 1', description: 'Environment pass through a city that only exists inside Kokuro\'s world.' },
-    { title: 'Cigar Break', category: 'CHARACTER', duration: '1m00s', ratio: '9/16', span: 'span 1', description: 'A quiet character study — Kokuro alone with the smoke and the red light.' },
-    { title: 'Afterglow', category: 'CINEMATIC', duration: '1m35s', ratio: '16/9', span: 'span 2', description: 'Closing piece of the Ember Line trilogy, wide-format and slow-burn.' }
-  ];
+  data = [{"code": "DNTSqSRR0ev", "title": "Reel 01"}, {"code": "DNN2PKexu-o", "title": "Reel 02"}, {"code": "DNIXfs_gJ0i", "title": "Reel 03"}, {"code": "DNI-ighRBa1", "title": "Reel 04"}, {"code": "DNBrrfiR33U", "title": "Reel 05"}, {"code": "DMx0QOOxv8w", "title": "Reel 06"}, {"code": "DMvN9JCRiTA", "title": "Reel 07"}, {"code": "DMsp5eLRX1q", "title": "Reel 08"}, {"code": "DMp-IK3s0Ts", "title": "Reel 09"}, {"code": "DMl0YAvR0zZ", "title": "Reel 10"}, {"code": "DMk8EZssCO2", "title": "Reel 11"}, {"code": "DMip0SExPZ5", "title": "Reel 12"}, {"code": "DMihlxlRwWl", "title": "Reel 13"}, {"code": "DMf0TzcRLo-", "title": "Reel 14"}, {"code": "DMdY8E5xsQ0", "title": "Reel 15"}, {"code": "DMbJkFYRlwy", "title": "Reel 16"}, {"code": "DMaqzDCx3r8", "title": "Reel 17"}, {"code": "DMYDT8vxAnq", "title": "Reel 18"}, {"code": "DMVd2-jxhH5", "title": "Reel 19"}, {"code": "DMS7iTbx4O3", "title": "Reel 20"}, {"code": "DMN7TkyRawy", "title": "Reel 21"}, {"code": "DMLLARJxlM4", "title": "Reel 22"}, {"code": "DMImk1PR-to", "title": "Reel 23"}, {"code": "DMFhjgixhzG", "title": "Reel 24"}, {"code": "DMA-ufFRDI8", "title": "Reel 25"}, {"code": "DM8KYn9xW3m", "title": "Reel 26"}, {"code": "DM26qnBx8RL", "title": "Reel 27"}, {"code": "DM0YQzVMvE3", "title": "Reel 28"}, {"code": "DLzs805xYUb", "title": "Reel 29"}, {"code": "DLxs-TexG10", "title": "Reel 30"}, {"code": "DLxXizjxi3F", "title": "Reel 31"}, {"code": "DLxAlxQxrqf", "title": "Reel 32"}, {"code": "DLucSWixutj", "title": "Reel 33"}, {"code": "DLu2DLcsKnP", "title": "Reel 34"}, {"code": "DLtYGiYMVN-", "title": "Reel 35"}, {"code": "DLseuBGxaMC", "title": "Reel 36"}, {"code": "DLsOIfSMJlj", "title": "Reel 37"}, {"code": "DLsDqZWsIZ1", "title": "Reel 38"}, {"code": "DLpitVksB5R", "title": "Reel 39"}, {"code": "DLph0YqMQf-", "title": "Reel 40"}, {"code": "DL9sXjXMajQ", "title": "Reel 41"}, {"code": "DL8eMIkxA_0", "title": "Reel 42"}, {"code": "DL7tIyqMjAZ", "title": "Reel 43"}, {"code": "DL5J28wRkZG", "title": "Reel 44"}, {"code": "DL4fMoaMg6X", "title": "Reel 45"}, {"code": "DL3SzuexGQ2", "title": "Reel 46"}, {"code": "DL2ita0R4Yc", "title": "Reel 47"}, {"code": "DL18U4Sxehi", "title": "Reel 48"}, {"code": "DL0BzW8xKha", "title": "Reel 49"}, {"code": "DL00Jy_RcUB", "title": "Reel 50"}, {"code": "DL-VqqFMl0O", "title": "Reel 51"}];
 
-  categoryList = ['All', 'Cinematic', 'Character', 'Comedy', 'Experimental', 'Commercial', 'Short Form', 'Worldbuilding'];
+  embedFor(code) { return 'https://www.instagram.com/reel/' + code + '/embed/'; }
+  permalinkFor(code) { return 'https://www.instagram.com/kokurothewolf/reel/' + code + '/'; }
 
   renderVals() {
-    const filter = this.state.filter;
-    const categories = this.categoryList.map(label => ({
-      label,
-      select: () => this.setState({ filter: label }),
-      style: {
-        padding: '9px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.5px',
-        cursor: 'pointer', border: '1px solid ' + (filter === label ? 'oklch(56% 0.22 25)' : 'rgba(255,255,255,0.12)'),
-        background: filter === label ? 'oklch(40% 0.17 24)' : 'transparent',
-        color: filter === label ? '#fff' : 'oklch(75% 0.02 50)'
-      }
+    const videos = this.data.map((v, i) => ({ ...v,
+      embed: this.embedFor(v.code), permalink: this.permalinkFor(v.code),
+      open: () => this.setState({ activeIndex: i })
     }));
-
-    const filtered = this.data.filter(v => filter === 'All' || v.category.toLowerCase() === filter.toLowerCase());
-    const videos = filtered.map((v, i) => ({ ...v, open: () => this.setState({ activeIndex: this.data.indexOf(v) }) }));
-
-    const activeVideo = this.state.activeIndex !== null ? this.data[this.state.activeIndex] : null;
-    const featured = { open: () => this.setState({ activeIndex: 0 }) };
-
+    const idx = this.state.activeIndex;
+    const activeVideo = idx !== null
+      ? { ...this.data[idx], embed: this.embedFor(this.data[idx].code), permalink: this.permalinkFor(this.data[idx].code) }
+      : null;
+    const featuredEmbed = this.data.length ? this.embedFor(this.data[0].code) : '';
     return {
       navOpen: this.state.navOpen,
       toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),
-      categories, videos, featured,
-      activeVideo,
+      videos, activeVideo, featuredEmbed,
       closeVideo: () => this.setState({ activeIndex: null }),
+      prev: () => this.setState(s => ({ activeIndex: (s.activeIndex + this.data.length - 1) % this.data.length })),
+      next: () => this.setState(s => ({ activeIndex: (s.activeIndex + 1) % this.data.length })),
       stop: (e) => e.stopPropagation()
     };
   }

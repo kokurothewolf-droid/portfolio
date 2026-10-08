@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GALLERY — Kokuro the Wolf</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -11,7 +13,6 @@
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
 <style>
   body{margin:0;background:#0b0a0a;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -64,7 +65,7 @@
     <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="9">
       <div onClick="{{ t.open }}" style="break-inside:avoid;margin-bottom:20px;position:relative;cursor:pointer;border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,0.07);animation:fadeUp .6s ease both;">
         <div style="width:100%;aspect-ratio:{{ t.ratio }};position:relative;">
-          <image-slot ref="{{ t.ref }}" id="{{ t.id }}" shape="rect" fit="contain" placeholder="{{ t.placeholder }}"></image-slot>
+          <img src="{{ t.src }}" loading="lazy" alt="{{ t.title }}" style="width:100%;height:100%;object-fit:contain;display:block;"/>
         </div>
         <div style="position:absolute;pointer-events:none;bottom:0;left:0;right:0;padding:14px;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent);">
           <div style="font-family:'Anton',sans-serif;font-size:17px;color:#fff;">{{ t.title }}</div>
@@ -81,7 +82,7 @@
       <button onClick="{{ next }}" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;">›</button>
       <div onClick="{{ stop }}" style="max-width:900px;width:90vw;">
         <div style="width:100%;aspect-ratio:{{ activeTile.ratio }};max-height:78vh;">
-          <image-slot ref="{{ activeTile.ref }}" id="{{ activeTile.id }}" shape="rect" fit="contain" placeholder="{{ activeTile.placeholder }}"></image-slot>
+          <img src="{{ activeTile.src }}" alt="{{ activeTile.title }}" style="width:100%;height:100%;object-fit:contain;display:block;"/>
         </div>
         <div style="padding:18px 4px;">
           <div style="font-family:'Anton',sans-serif;font-size:24px;color:#fff;">{{ activeTile.title }}</div>
@@ -102,38 +103,11 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
-  state = { navOpen: false, activeIndex: null, collection: 'All', ratios: {} };
+  state = { navOpen: false, activeIndex: null, collection: 'All' };
 
-  watchRatio(id) {
-    return (el) => {
-      if (!el || !el.shadowRoot) return;
-      const img = el.shadowRoot.querySelector('.frame img');
-      if (!img || img._ratioBound) return;
-      img._ratioBound = true;
-      const update = () => {
-        if (img.naturalWidth && img.naturalHeight) {
-          const r = img.naturalWidth + '/' + img.naturalHeight;
-          if (this.state.ratios[id] !== r) this.setState(s => ({ ratios: { ...s.ratios, [id]: r } }));
-        }
-      };
-      img.addEventListener('load', update);
-      if (img.complete) update();
-    };
-  }
+  data = [{"id": "kokuro_002", "title": "Kokuro 002", "collection": "Kokuro", "ratio": "1376/768", "src": "uploads/Kokuro/Kokuro_002.JPG"}, {"id": "kokuro_003", "title": "Kokuro 003", "collection": "Kokuro", "ratio": "1254/1254", "src": "uploads/Kokuro/Kokuro_003.png"}, {"id": "kokuro_004", "title": "Kokuro 004", "collection": "Kokuro", "ratio": "1086/1448", "src": "uploads/Kokuro/Kokuro_004.png"}, {"id": "kokuro_005", "title": "Kokuro 005", "collection": "Kokuro", "ratio": "1536/2752", "src": "uploads/Kokuro/Kokuro_005.jpg"}, {"id": "kokuro_006", "title": "Kokuro 006", "collection": "Kokuro", "ratio": "1254/1254", "src": "uploads/Kokuro/Kokuro_006.png"}, {"id": "kokuro_008", "title": "Kokuro 008", "collection": "Kokuro", "ratio": "864/1536", "src": "uploads/Kokuro/Kokuro_008.png"}, {"id": "kokuro_009", "title": "Kokuro 009", "collection": "Kokuro", "ratio": "941/1672", "src": "uploads/Kokuro/Kokuro_009.png"}, {"id": "kokuro_010", "title": "Kokuro 010", "collection": "Kokuro", "ratio": "1086/1448", "src": "uploads/Kokuro/Kokuro_010.png"}, {"id": "kokuro_012", "title": "Kokuro 012", "collection": "Kokuro", "ratio": "1672/941", "src": "uploads/Kokuro/Kokuro_012.png"}, {"id": "kokuro_015", "title": "Kokuro 015", "collection": "Kokuro", "ratio": "1672/941", "src": "uploads/Kokuro/Kokuro_015.png"}, {"id": "kokuro_016", "title": "Kokuro 016", "collection": "Kokuro", "ratio": "1149/1369", "src": "uploads/Kokuro/Kokuro_016.png"}, {"id": "kokuro_019", "title": "Kokuro 019", "collection": "Kokuro", "ratio": "1254/1254", "src": "uploads/Kokuro/Kokuro_019.png"}, {"id": "nyla_001", "title": "Nyla 001", "collection": "Nyla", "ratio": "1024/1536", "src": "uploads/Nyla/Nyla_001.png"}, {"id": "nyla_002", "title": "Nyla 002", "collection": "Nyla", "ratio": "941/1672", "src": "uploads/Nyla/Nyla_002.png"}, {"id": "nyla_003", "title": "Nyla 003", "collection": "Nyla", "ratio": "1122/1402", "src": "uploads/Nyla/Nyla_003.png"}, {"id": "nyla_004", "title": "Nyla 004", "collection": "Nyla", "ratio": "1122/1402", "src": "uploads/Nyla/Nyla_004.jpg"}, {"id": "nyla_005", "title": "Nyla 005", "collection": "Nyla", "ratio": "1086/1448", "src": "uploads/Nyla/Nyla_005.png"}, {"id": "nyla_006", "title": "Nyla 006", "collection": "Nyla", "ratio": "1024/1365", "src": "uploads/Nyla/Nyla_006.png"}, {"id": "nyla_007", "title": "Nyla 007", "collection": "Nyla", "ratio": "1024/1536", "src": "uploads/Nyla/Nyla_007.png"}, {"id": "nyla_008", "title": "Nyla 008", "collection": "Nyla", "ratio": "1086/1448", "src": "uploads/Nyla/Nyla_008.png"}, {"id": "nyla_009", "title": "Nyla 009", "collection": "Nyla", "ratio": "768/1344", "src": "uploads/Nyla/Nyla_009.jpg"}, {"id": "nyla_011", "title": "Nyla 011", "collection": "Nyla", "ratio": "1254/1254", "src": "uploads/Nyla/Nyla_011.png"}, {"id": "nyla_012", "title": "Nyla 012", "collection": "Nyla", "ratio": "1254/1254", "src": "uploads/Nyla/Nyla_012.png"}, {"id": "nyla_013", "title": "Nyla 013", "collection": "Nyla", "ratio": "1882/2272", "src": "uploads/Nyla/Nyla_013.png"}, {"id": "nyla_014", "title": "Nyla 014", "collection": "Nyla", "ratio": "1122/1402", "src": "uploads/Nyla/Nyla_014.png"}, {"id": "nyla_015", "title": "Nyla 015", "collection": "Nyla", "ratio": "941/1672", "src": "uploads/Nyla/Nyla_015.png"}, {"id": "nyla_016", "title": "Nyla 016", "collection": "Nyla", "ratio": "1086/1448", "src": "uploads/Nyla/Nyla_016.png"}, {"id": "nyla_017", "title": "Nyla 017", "collection": "Nyla", "ratio": "1122/1402", "src": "uploads/Nyla/Nyla_017.png"}, {"id": "tavien_001", "title": "Tavien 001", "collection": "Tavien", "ratio": "1254/1254", "src": "uploads/Tavien/Tavien_001.png"}, {"id": "tavien_002", "title": "Tavien 002", "collection": "Tavien", "ratio": "941/1672", "src": "uploads/Tavien/Tavien_002.png"}, {"id": "tavien_003", "title": "Tavien 003", "collection": "Tavien", "ratio": "941/1672", "src": "uploads/Tavien/Tavien_003.png"}, {"id": "tavien_004", "title": "Tavien 004", "collection": "Tavien", "ratio": "1086/1448", "src": "uploads/Tavien/Tavien_004.png"}, {"id": "tavien_005", "title": "Tavien 005", "collection": "Tavien", "ratio": "1254/1254", "src": "uploads/Tavien/Tavien_005.png"}, {"id": "jade_001", "title": "Jade 001", "collection": "Jade", "ratio": "941/1672", "src": "uploads/Jade/Jade_001.png"}, {"id": "jade_002", "title": "Jade 002", "collection": "Jade", "ratio": "941/1672", "src": "uploads/Jade/Jade_002.png"}, {"id": "jade_003", "title": "Jade 003", "collection": "Jade", "ratio": "1086/1448", "src": "uploads/Jade/Jade_003.png"}, {"id": "jade_004", "title": "Jade 004", "collection": "Jade", "ratio": "1254/1254", "src": "uploads/Jade/Jade_004.png"}, {"id": "jade_005", "title": "Jade 005", "collection": "Jade", "ratio": "1024/1536", "src": "uploads/Jade/Jade_005.png"}, {"id": "group_002", "title": "Group 002", "collection": "Group", "ratio": "1672/941", "src": "uploads/Group/Group_002.png"}, {"id": "other_001", "title": "Other 001", "collection": "Other", "ratio": "1024/1536", "src": "uploads/Other/Other_001.png"}, {"id": "other_002", "title": "Other 002", "collection": "Other", "ratio": "1024/1536", "src": "uploads/Other/Other_002.png"}, {"id": "other_003", "title": "Other 003", "collection": "Other", "ratio": "941/1672", "src": "uploads/Other/Other_003.png"}];
 
-  data = [
-    { id: 'g1', title: 'Redline', collection: 'Kokuro', ratio: '4/5', placeholder: 'Drop character portrait' },
-    { id: 'g2', title: 'Districts I', collection: 'Other Characters', ratio: '3/2', placeholder: 'Drop environment still' },
-    { id: 'g3', title: 'Ashen Hour', collection: 'Kokuro', ratio: '1/1', placeholder: 'Drop character portrait' },
-    { id: 'g4', title: 'Static Field', collection: 'Other Characters', ratio: '5/4', placeholder: 'Drop experimental frame' },
-    { id: 'g5', title: 'Moonlit Bite', collection: 'Nyla', ratio: '4/5', placeholder: 'Drop character portrait' },
-    { id: 'g6', title: 'Low Light', collection: 'Tavien', ratio: '3/4', placeholder: 'Drop character portrait' },
-    { id: 'g7', title: 'Ember Study', collection: 'Kokuro', ratio: '1/1', placeholder: 'Drop experimental frame' },
-    { id: 'g8', title: 'Velvet Hour', collection: 'Nyla', ratio: '3/4', placeholder: 'Drop character portrait' },
-    { id: 'g9', title: 'Afterimage', collection: 'Tavien', ratio: '4/5', placeholder: 'Drop character portrait' }
-  ];
-
-  collectionList = ['All', 'Kokuro', 'Nyla', 'Tavien', 'Other Characters'];
+  collectionList = ['All', 'Kokuro', 'Nyla', 'Tavien', 'Jade', 'Group', 'Other'];
 
   renderVals() {
     const active = this.state.collection;
@@ -147,16 +121,10 @@ class Component extends DCLogic {
         color: active === label ? '#fff' : 'oklch(75% 0.02 50)'
       }
     }));
-
     const filtered = this.data.filter(t => active === 'All' || t.collection === active);
-    const tiles = filtered.map(t => ({
-      ...t, ratio: this.state.ratios[t.id] || t.ratio, ref: this.watchRatio(t.id),
-      open: () => this.setState({ activeIndex: this.data.indexOf(t) })
-    }));
+    const tiles = filtered.map(t => ({ ...t, open: () => this.setState({ activeIndex: this.data.indexOf(t) }) }));
     const idx = this.state.activeIndex;
-    const activeTile = idx !== null
-      ? { ...this.data[idx], ratio: this.state.ratios[this.data[idx].id] || this.data[idx].ratio, ref: this.watchRatio(this.data[idx].id) }
-      : null;
+    const activeTile = idx !== null ? this.data[idx] : null;
     return {
       navOpen: this.state.navOpen,
       toggleNav: () => this.setState(s => ({ navOpen: !s.navOpen })),

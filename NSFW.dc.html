@@ -74,7 +74,10 @@
       <div onClick="{{ t.open }}" style="position:relative;border-radius:3px;overflow:hidden;cursor:pointer;background:#151110;border:1px solid rgba(255,255,255,0.07);aspect-ratio:9/16;animation:fadeUp .6s ease both;">
         <div style="position:absolute;inset:0;background:repeating-linear-gradient(115deg,#1c1513 0px,#1c1513 2px,#110c0b 2px,#110c0b 24px);"></div>
         <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);"></div>
-        <sc-if value="{{ t.src }}" hint-placeholder-val="{{ false }}">
+        <sc-if value="{{ t.isImage }}" hint-placeholder-val="{{ false }}">
+          <img src="{{ t.src }}" alt="{{ t.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
+        </sc-if>
+        <sc-if value="{{ t.src && !t.isImage }}" hint-placeholder-val="{{ false }}">
           <video src="{{ t.src }}" muted="{{ true }}" playsInline="{{ true }}" preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>
         </sc-if>
         <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;opacity:0.85;">
@@ -92,7 +95,10 @@
       <button onClick="{{ close }}" style="position:absolute;top:24px;right:32px;background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:20px;width:40px;height:40px;border-radius:50%;cursor:pointer;z-index:5;">✕</button>
       <div onClick="{{ stop }}" style="width:min(420px,84vw);">
         <div style="width:100%;aspect-ratio:9/16;position:relative;background:#151110;border-radius:4px;overflow:hidden;">
-          <sc-if value="{{ activeTile.src }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ activeTile.isImage }}" hint-placeholder-val="{{ false }}">
+            <img src="{{ activeTile.src }}" alt="{{ activeTile.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;"/>
+          </sc-if>
+          <sc-if value="{{ activeTile.src && !activeTile.isImage }}" hint-placeholder-val="{{ false }}">
             <video src="{{ activeTile.src }}" autoPlay="{{ true }}" loop="{{ true }}" controls="{{ true }}" playsInline="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;"></video>
           </sc-if>
           <sc-if value="{{ !activeTile.src }}" hint-placeholder-val="{{ true }}">
@@ -120,6 +126,7 @@ class Component extends DCLogic {
 
   data = [
     { id: 'n1', title: 'Untitled I', src: 'uploads/NSFW/8c00675c3a37289f062fb3b1d5949da8.mp4' },
+    { id: 'n1i', title: 'Nyla 009', src: 'uploads/NSFW/Nyla_009.jpg', isImage: true },
     { id: 'n2', title: 'Untitled II' },
     { id: 'n3', title: 'Untitled III' },
     { id: 'n4', title: 'Untitled IV' },

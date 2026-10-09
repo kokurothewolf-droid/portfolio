@@ -43,7 +43,7 @@ class Component extends DCLogic {
 
   state = {
     index: parseInt(localStorage.getItem('kokuro_audio_index') || '0', 10) || 0,
-    playing: localStorage.getItem('kokuro_audio_playing') !== 'false',
+    playing: false,
     muted: localStorage.getItem('kokuro_audio_muted') === 'true',
     currentTime: parseFloat(localStorage.getItem('kokuro_audio_time') || '0') || 0,
     duration: 0
@@ -54,15 +54,14 @@ class Component extends DCLogic {
     if (!el) return;
     el.muted = this.state.muted;
     if (this.state.currentTime) { try { el.currentTime = this.state.currentTime; } catch (e) {} }
-    if (this.state.playing) { el.play().catch(() => this.setState({ playing: false })); }
   };
 
   componentDidMount() {
-    if (this.audioEl && this.state.playing) {
-      this.audioEl.play().catch(() => {
-        this.audioEl.muted = true;
-        this.audioEl.play().then(() => this.setState({ muted: true })).catch(() => this.setState({ playing: false }));
-      });
+    // Browsers block unmuted autoplay; only resume if the visitor explicitly
+    // played music on a previous visit AND interaction, else start paused.
+    if (this.audioEl && localStorage.getItem('kokuro_audio_playing') === 'true') {
+      this.audioEl.play().then(() => this.setState({ playing: true }))
+        .catch(() => this.setState({ playing: false }));
     }
   }
 
